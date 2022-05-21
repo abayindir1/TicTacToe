@@ -2,9 +2,9 @@ game = [[0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]]
 
-game1 = [[1, 0, 1],
-        [2, 2, 2],
-        [0, 2, 0]]
+game1 = [[1, 1, 2],
+        [1, 2, 2],
+        [0, 2, 2]]
 
 def horizontalWin(currentGame):
         for row in currentGame:
@@ -14,6 +14,16 @@ def horizontalWin(currentGame):
                         print("You won!")
                 else: 
                         print(row)
+
+def verticalWin(currentGame):
+        for column in range(len(currentGame)):
+                list =[]
+                for row in currentGame:
+                        list.append(row[column])
+                if all(element == list[0] for element in list):
+                        print("You won!")
+
+def diagonalWin(currentGame):
 
 
 # def gameBoard(board, player, row, column, display=False):
@@ -29,4 +39,4 @@ def horizontalWin(currentGame):
 #     except IndexError as e:
 #         print("Error: make sure you input row/column as 0 1 or 2", e)
 
-horizontalWin(game1)
+diagonalWin(game1)
