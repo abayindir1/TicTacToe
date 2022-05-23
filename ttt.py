@@ -35,30 +35,35 @@ def win(currentGame):
 
 def gameBoard(board, player=0, row=0, column=0, display=False):
     try:
+        if board[row][column] != 0:
+            print("You can't play there, it is filled")
+            return board, False
         print("   0  1  2")
         if not display:
             board[row][column] = player
         for count, row in enumerate(board):
-                print(count, row)
-        return board
+            print(count, row)
+        return board, True
     except IndexError as e:
         print("Error: make sure you input row/column as 0 1 or 2", e)
+        return board, False
 
 
 play = True
 # players = [1, 2]
 while play:
-    board1 =[[0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0]]
+    board = [[0, 0, 0],
+              [0, 0, 0],
+              [0, 0, 0]]
 
     gameWon = False
-    board1 = gameBoard(board1, display=True)
-    playerChoice = itertools.cycle([1,2])
+    board, _ = gameBoard(board, display=True)
+    playerChoice = itertools.cycle([1, 2])
     while not gameWon:
         currentPlayer = next(playerChoice)
         print(f"Current player: {currentPlayer}")
-        colChoice = int(input("What column do you want to play? (0, 1, 2):"))
-        rowChoice = int(input("What row do you want to play? (0, 1, 2):"))
-
-        gameBoard(board1, currentPlayer, rowChoice, colChoice)
+        played = False
+        while not played:
+            colChoice = int(input("What column do you want to play? (0, 1, 2):"))
+            rowChoice = int(input("What row do you want to play? (0, 1, 2):"))
+            game, played = gameBoard(board, currentPlayer, rowChoice, colChoice)
