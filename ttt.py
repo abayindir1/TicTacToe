@@ -1,3 +1,4 @@
+import itertools
 game1 = [[1, 0, 2],
          [0, 2, 2],
          [2, 1, 1]]
@@ -45,7 +46,7 @@ def gameBoard(board, player=0, row=0, column=0, display=False):
 
 
 play = True
-players = [1, 2]
+# players = [1, 2]
 while play:
     board1 =[[0, 0, 0],
             [0, 0, 0],
@@ -53,9 +54,10 @@ while play:
 
     gameWon = False
     board1 = gameBoard(board1, display=True)
-
+    playerChoice = itertools.cycle([1,2])
     while not gameWon:
-        currentPlayer = 1
+        currentPlayer = next(playerChoice)
+        print(f"Current player: {currentPlayer}")
         colChoice = int(input("What column do you want to play? (0, 1, 2):"))
         rowChoice = int(input("What row do you want to play? (0, 1, 2):"))
 
