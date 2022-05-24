@@ -5,12 +5,12 @@ game1 = [[1, 0, 0],
 
 
 def win(currentGame):
-
     # horizontal win
     for row in currentGame:
         result = all(element == row[0] and row[0] != 0 for element in row)
         if result:
             print(f"Player {row[0]} is the winner horizontally")
+            return True
 
     # vertical win
     for column in range(len(currentGame)):
@@ -19,6 +19,7 @@ def win(currentGame):
             list.append(row[column])
         if all(element == list[0] and list[0] != 0 for element in list):
             print(f"Player {list[0]} is the winner vertically")
+            return True
 
     # diagonal win
     # left to right
@@ -27,15 +28,17 @@ def win(currentGame):
         diagonals.append(currentGame[x][x])
     if all(element == diagonals[0] and diagonals[0] != 0 for element in diagonals):
         print(f"Player {diagonals[0]} is the winner diagonally (\\)")
+        return True
     # right to left
     diagonals2 = []
     for col, row in enumerate(reversed(range(len(currentGame)))):
         diagonals2.append(currentGame[row][col])
     if all(element == diagonals2[0] and diagonals2[0] != 0 for element in diagonals2):
         print(f"Player {diagonals2[0]} is the winner diagonally (/)")
+        return True
+    
+    return False
 
-
-win(game1)
 
 def gameBoard(board, player=0, row=0, column=0, display=False):
     try:
@@ -71,3 +74,15 @@ while play:
             colChoice = int(input("What column do you want to play? (0, 1, 2):"))
             rowChoice = int(input("What row do you want to play? (0, 1, 2):"))
             game, played = gameBoard(board, currentPlayer, rowChoice, colChoice)
+    
+        if win(board):
+            gameWon = True
+            again = input("It is over. Play again? (y/n): ")
+            if again.lower() == "y":
+                print("Restarting...")
+            elif again.lower() == "n":
+                print("Bye")
+                play = False
+            else:
+                print("Not Valid")
+                play = False
