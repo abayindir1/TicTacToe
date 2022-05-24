@@ -1,37 +1,41 @@
 import itertools
-game1 = [[1, 0, 2],
-         [0, 2, 2],
-         [2, 1, 1]]
+game1 = [[1, 0, 0],
+         [2, 1, 2],
+         [0, 1, 1]]
 
 
 def win(currentGame):
+
     # horizontal win
     for row in currentGame:
-        result = all(element == row[0] for element in row)
+        result = all(element == row[0] and row[0] != 0 for element in row)
         if result:
             print(f"Player {row[0]} is the winner horizontally")
+
     # vertical win
     for column in range(len(currentGame)):
         list = []
         for row in currentGame:
             list.append(row[column])
-        if all(element == list[0] for element in list):
+        if all(element == list[0] and list[0] != 0 for element in list):
             print(f"Player {list[0]} is the winner vertically")
 
     # diagonal win
-    # right to left
+    # left to right
     diagonals = []
     for x in range(len(currentGame)):
         diagonals.append(currentGame[x][x])
-    if all(element == diagonals[0] for element in diagonals):
+    if all(element == diagonals[0] and diagonals[0] != 0 for element in diagonals):
         print(f"Player {diagonals[0]} is the winner diagonally (\\)")
-    # left to right
+    # right to left
     diagonals2 = []
     for col, row in enumerate(reversed(range(len(currentGame)))):
         diagonals2.append(currentGame[row][col])
-    if all(element == diagonals2[0] for element in diagonals2):
+    if all(element == diagonals2[0] and diagonals2[0] != 0 for element in diagonals2):
         print(f"Player {diagonals2[0]} is the winner diagonally (/)")
 
+
+win(game1)
 
 def gameBoard(board, player=0, row=0, column=0, display=False):
     try:
@@ -50,7 +54,6 @@ def gameBoard(board, player=0, row=0, column=0, display=False):
 
 
 play = True
-# players = [1, 2]
 while play:
     board = [[0, 0, 0],
               [0, 0, 0],
@@ -62,6 +65,7 @@ while play:
     while not gameWon:
         currentPlayer = next(playerChoice)
         print(f"Current player: {currentPlayer}")
+        win(board)
         played = False
         while not played:
             colChoice = int(input("What column do you want to play? (0, 1, 2):"))
